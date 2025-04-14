@@ -1,0 +1,19 @@
+<div class=" flex flex-row sm:flex-col sm:w-48 rounded-2xl shadow-md hover:cursor-pointer hover:opacity-90" (click)="onCardClick()">
+  <div class="sm:rounded-t-2xl sm:rounded-b-none rounded-l-2xl overflow-hidden">
+    <!-- Image -->
+    <img
+      [src]="`${environment.apiUrl}/${this.scenario().imageSrc}`"
+      [alt]="scenario().title"
+      class="object-cover w-full h-full"
+    />
+  </div>
+  <div class="px-4 py-2">
+    <!-- Title -->
+    <h1 class="text-md font-semibold mb-2">Lvl: {{scenario().id}} {{ scenario().title }}</h1>
+
+    <!-- Description -->
+    <p class="opacity-80" [class]="{ 'line-clamp-3': !expandDescription() }">
+      {{ scenario().description }}
+    </p>
+  </div>
+</div>

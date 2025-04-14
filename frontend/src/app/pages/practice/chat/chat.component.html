@@ -1,0 +1,17 @@
+<div
+  class="border border-base-300 w-full h-96 rounded-2xl flex flex-col pb-2 px-3"
+>
+  <!-- Previous messages -->
+  <div class="w-full flex-1">
+    @for (message of messages(); track $index) {
+        <div>
+            <p>{{message.content}}</p>
+        </div>
+    }
+  </div>
+  <!-- User inputs -->
+  <div>
+    <input type="text" class="input" [(ngModel)]="userInput" [disabled]="!canSendMessage()" />
+    <button class="btn" [disabled]="!canSendMessage()" (click)="onUserMessageSent()">Send</button>
+  </div>
+</div>
