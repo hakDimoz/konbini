@@ -6,6 +6,7 @@ export interface GenerateTurnRequest {
 export interface Message {
     role: "user" | "model";
     content: string;
+    audioUrl?: string;
 }
 
 export interface GenerateTurnResponse {

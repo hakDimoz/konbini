@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { Message } from '../../practice.model';
 
 @Component({
   selector: 'app-message',
   imports: [],
   templateUrl: './message.component.html',
-  styleUrl: './message.component.css'
 })
 export class MessageComponent {
-
+  message = input.required<Message>();
 }

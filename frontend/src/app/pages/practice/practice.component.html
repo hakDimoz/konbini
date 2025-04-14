@@ -5,18 +5,22 @@
   <span class="loading loading-dots loading-lg mx-auto"></span>
 </div>
 } @else {
-<div class="pt-5">
-  <h1 class="font-semibold text-3xl">Level: {{scenario()?.id}} {{ scenario()?.title }}</h1>
-  <div class="flex flex-col sm:flex-row gap-4 mt-5">
-    <!-- Konbini scenario -->
-     <div>
-       <img src="images/konbini.png" alt="Konbini"> 
-     </div>
-
-     <!-- Chat history -->
+<div class="pt-5 h-full flex justify-center">
+  <div class="h-full py-5 flex flex-col">
+    <h1 class="font-semibold text-3xl">
+      Level: {{ scenario()?.id }} {{ scenario()?.title }}
+    </h1>
+    <div class="flex flex-col md:flex-row gap-4  max-w-126 items-center flex-1">
+      <!-- Konbini scenario -->
       <div class="">
-        <app-chat (userMessageSent)="onUserMessageSent($event)"/>
+        <img src="images/konbini.png" alt="Konbini" />
       </div>
+
+      <!-- Chat history -->
+      <div class="h-full w-full">
+        <app-chat (userMessageSent)="onUserMessageSent($event)" />
+      </div>
+    </div>
   </div>
 </div>
 }

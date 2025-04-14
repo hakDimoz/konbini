@@ -34,6 +34,7 @@ export class PracticeService {
         const message: Message = {
           role: 'model',
           content: response.responseText,
+          audioUrl: response.audioUrl,
         };
 
         this.addMessage(message);
