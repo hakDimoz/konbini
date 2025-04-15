@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, output } from '@angular/core';
 import { AudioRecorderService } from '../../audio-recorder.service';
 import { environment } from '../../../../../environments/environment.development';
 
@@ -11,6 +11,7 @@ export class MicrophoneComponent {
   environment = environment;
   recorderService = inject(AudioRecorderService);
   isRecording = computed(() => this.recorderService.isRecording());
+  speechTranscribed = output<string>();
 
   async start() {
     await this.recorderService.startRecording();
@@ -25,10 +26,21 @@ export class MicrophoneComponent {
     const formData = new FormData();
     formData.append('audio', audioBlob, 'recording.webm');
 
-    console.log(formData.get('audio'));
-    fetch(`${environment.apiUrl}/`, {
-      method: 'POST',
-      body: formData,
-    });
+    try {
+      const res = await fetch(`${environment.apiUrl}/api/chat/transcribe`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!res.ok) {
+        throw new Error(`Upload failed: ${res.statusText}`);
+      }
+
+      const { text } = await res.json();
+
+      this.speechTranscribed.emit(text);
+    } catch (err) {
+      console.error('Error sending audio:', err);
+    }
   }
 }

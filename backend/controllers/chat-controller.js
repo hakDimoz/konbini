@@ -1,30 +1,6 @@
 const { scenarios } = require("./scenario-controller");
-dotenv = require("dotenv").config();
 const { convertTextToSpeech, convertToGeminiMessages, generateTextResponse} = require("../utilites/gemini");
-
-// AssemblyAI set up
-AssemblyAI = require("assemblyai").AssemblyAI;
-
-const assemblyClient = new AssemblyAI({
-	apiKey: process.env.ASSEMBLY_AI_KEY,
-});
-// Or use a publicly-accessible URL:
-const audioFile = "https://assembly.ai/wildfires.mp3";
-
-const params = {
-	audio: audioFile,
-};
-
-const run = async () => {
-	const transcript = await assemblyClient.transcripts.transcribe(params);
-
-	if (transcript.status === "error") {
-		console.error(`Transcription failed: ${transcript.error}`);
-		process.exit(1);
-	}
-
-	console.log(transcript.text);
-};
+const { handleTranscription } = require("../utilites/audioTranscriber");
 
 // Generates a response and audio from the ai based on the previous messages and scenario
 const generateTurn = async (req, res) => {
@@ -57,12 +33,19 @@ const generateTurn = async (req, res) => {
 	}
 };
 
-
-
-const convertSpeechToText = async (audioFilePath) => {};
-
+// Converts users speech to text - returns text
+const transcribeAudio = async (req, res) => {
+	try {
+		const text = await handleTranscription(req);
+		res.status(200).json({ text });
+	} catch (error) {
+		console.error("Error transcribing audio:", error);
+		res.status(500).json({ error: "Failed to transcribe audio" });
+	}
+}
 
 
 module.exports = {
 	generateTurn,
+	transcribeAudio
 };

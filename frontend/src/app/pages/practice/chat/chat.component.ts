@@ -24,4 +24,8 @@ export class ChatComponent {
     this.userMessageSent.emit(this.userInput());
     this.userInput.set('');
   }
+
+  onSpeechTranscribed(text: string) {
+    this.userInput.set(text);
+  }
 }
