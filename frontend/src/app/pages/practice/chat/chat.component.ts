@@ -2,10 +2,11 @@ import { Component, computed, effect, inject, output, signal } from '@angular/co
 import { FormsModule } from '@angular/forms';
 import { PracticeService } from '../../practice.service';
 import { MessageComponent } from "./message/message.component";
+import { MicrophoneComponent } from "./microphone/microphone.component";
 
 @Component({
   selector: 'app-chat',
-  imports: [FormsModule, MessageComponent],
+  imports: [FormsModule, MessageComponent, MicrophoneComponent],
   templateUrl: './chat.component.html',
 })
 export class ChatComponent {
